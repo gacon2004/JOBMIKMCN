@@ -1,0 +1,23 @@
+{
+  "excel_file": "D:\\KHONGGIANLAMVIEC\\nhandienvatthe\\shopee.xlsx",
+  "download_dir": "D:\\KHONGGIANLAMVIEC\\nhandienvatthe\\fileanhtam",
+  "img_done_dir": "D:\\KHONGGIANLAMVIEC\\nhandienvatthe\\imgdone",
+  "result_xlsx": "D:\\KHONGGIANLAMVIEC\\nhandienvatthe\\imgdone\\result_links.xlsx",
+  "chrome_exe": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "user_data_dir": "C:\\Users\\PC\\AppData\\Local\\Google\\Chrome\\User Data",
+  "profile_dir_name": "Default",
+  "conf_thres": 0.5,
+  "ideal_ratio": 0.4,
+  "open_link_delay": 5.0,
+  "max_wait_dl": 120,
+  "quiet_seconds": 3,
+  "close_tab_each_round": true,
+  "east_model": "frozen_east_text_detection.pb",
+  "yolo_model": "yolov8n.pt",
+  "nsfw_h5": "nsfw_mobilenet2.224x224.h5",
+  "nsfw_saved_dir": "nsfw_mobilenet2.224x224_saved",
+  "gemini_api_keys": [
+    "AIzaSyDqWD3rtlpJA-aixKpcv0YT2PbR4M2rylM"
+  ],
+  "gemini_prompt": "Bạn là chuyên gia chọn ảnh cho video quảng cáo Veo3. Tôi có {n} ảnh sản phẩm từ Shopee.\n\nNHIỆM VỤ:\n1. Phân tích tất cả ảnh để hiểu sản phẩm đang bán là gì\n2. Chọn 1 ảnh TỐT NHẤT để làm video quảng cáo Veo3\n\nTIÊU CHÍ CHỌN:\n✅ ẢNH TỐT (ƯU TIÊN CHỌN):\n- Ưu tiên Ảnh sản phẩm rõ ràng, chuyên nghiệp\n- Sản phẩm ở giữa, góc chụp đẹp\n- Ưu tiên sản phẩm có tay người cầm sẵn giới thiệu\n- VD: chai mỹ phẩm trên nền trắng, túi da, pin dự phòng,...\n\n❌ ẢNH CẤM (Không chọn):\n- nền ảnh không chứa chữ trung quốc nhé\n- không đồ nhái thương hiệu (logo fake, tên thương hiệu giả mạo)\n- không đồ cấm như bia rượu, vật sắc nhọn\n- Giấy tờ bảo hành, chứng nhận, Hướng dẫn sử dụng\n- Ảnh mờ, screenshot\n- không sản phẩm tình dục : bao cao su, sextoy, các sản phẩm hỗ trợ 18+\n- Không mô hình búp bê sexy\n- Khiêu dâm/Phản cảm: Đồ lót ,nội y, bikini, nếu có mẫu mặc sẵn thì ko chọn.còn lại đồ lót là sản phẩm riêng lẻ vẫn lấy bình thường.\n- Áo hở ngực sâu ,Váy đầm hở mông, Váy đầm quá ngắn bó sát sexy.\n- Vũ khí, vật sắc nhọn, Dao , máu me, vết thương, tai nạn.\n- Hàng cấm: Bia, rượu, thuốc lá, ma túy, chất cấm.\n- Không chọn hình ảnh có trẻ em.\n\n⚠️ ĐẶC BIỆT:\n- Nếu phát hiện đồ lót/nội y → Trả về {\"best_image_index\": -1, \"reason\": \"REJECT\"}\n- Nếu KHÔNG có ảnh nào đạt chuẩn → {\"best_image_index\": -1, \"reason\": \"No good \"}\n\nTRẢ LỜI (JSON format):\n{\n  \n  \"best_image_index\": 0\n\n}\n\nCHÚ Ý: Index đếm từ 0. Ảnh đầu tiên là index 0, ảnh thứ 2 là index 1, etc."
+}
