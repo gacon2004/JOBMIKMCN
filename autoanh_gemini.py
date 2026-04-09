@@ -183,8 +183,9 @@ def read_image_links(excel_file):
         links = [str(row[col]).strip() for col in image_cols if pd.notna(row[col]) and str(row[col]).strip()]
         product_url = str(row['Product URL']).strip() if 'Product URL' in df.columns and pd.notna(row['Product URL']) else ""
         product_name = str(row['Product Name']).strip() if 'Product Name' in df.columns and pd.notna(row['Product Name']) else ""
+        product_description = str(row['Product Description']).strip() if 'Product Description' in df.columns and pd.notna(row['Product Description']) else ""
         if links:
-            rows.append({'links': links, 'product_url': product_url, 'product_name': product_name})
+            rows.append({'links': links, 'product_url': product_url, 'product_name': product_name, 'product_description': product_description})
     return rows
 
 def excel_ensure(xlsx_path):
@@ -194,7 +195,7 @@ def excel_ensure(xlsx_path):
         p.parent.mkdir(parents=True, exist_ok=True)
         wb = Workbook()
         ws = wb.active
-        ws.append(["STT", "Product Name", "Link", "Ảnh số", "Link ảnh được chọn"])
+        ws.append(["STT", "Product Name", "Product Description", "Link", "Ảnh số", "Link ảnh được chọn"])
         wb.save(xlsx_path)
 
 def excel_next_stt(xlsx_path):
@@ -575,6 +576,7 @@ class RunnerThread(threading.Thread):
             links = row['links']
             product_url = row['product_url']
             product_name = row['product_name']
+            product_description = row.get('product_description', "")
 
             clear_download_dir(s["download_dir"])
             self.ui.log(f"\n[{idx_row}] Đang tải {len(links)} ảnh...")
@@ -585,7 +587,7 @@ class RunnerThread(threading.Thread):
 
             if not files:
                 self.ui.log("  ❌ Không tải được ảnh nào.")
-                excel_append_row(s["result_xlsx"], [stt, product_name, product_url, 0, ""])
+                excel_append_row(s["result_xlsx"], [stt, product_name, product_description, product_url, 0, ""])
                 continue
 
             files = sorted(files, key=stable_key)
@@ -595,7 +597,7 @@ class RunnerThread(threading.Thread):
             best_path, best_idx = pick_best_image_with_gemini(files)
             if not best_path:
                 self.ui.log("  ❌ Gemini không chọn được ảnh.")
-                excel_append_row(s["result_xlsx"], [stt, product_name, product_url, 0, ""])
+                excel_append_row(s["result_xlsx"], [stt, product_name, product_description, product_url, 0, ""])
             else:
                 try:
                     im = Image.open(best_path).convert("RGB")
@@ -605,7 +607,7 @@ class RunnerThread(threading.Thread):
                 self.ui.log(f"  ✅ Chọn ảnh #{best_idx}")
                 # Lấy link gốc từ file Excel
                 selected_link = links[best_idx-1] if best_idx > 0 and best_idx <= len(links) else ""
-                excel_append_row(s["result_xlsx"], [stt, product_name, product_url, best_idx, selected_link])
+                excel_append_row(s["result_xlsx"], [stt, product_name, product_description, product_url, best_idx, selected_link])
 
             clear_download_dir(s["download_dir"])
             time.sleep(0.5)
